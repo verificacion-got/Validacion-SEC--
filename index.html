@@ -337,7 +337,7 @@
 
             try {
                 // Ruta del PDF original que se usará como base (debe estar en la misma carpeta)
-                const urlPDF = 'gerardoE.pdf'; 
+                const urlPDF = 'gerardoEspinozaR.pdf'; 
                 
                 // Cargar el PDF
                 const respuesta = await fetch(urlPDF);
@@ -369,7 +369,7 @@
                 const blob = new Blob([pdfModificado], { type: 'application/pdf' });
                 const linkDescarga = document.createElement('a');
                 linkDescarga.href = URL.createObjectURL(blob);
-                linkDescarga.download = 'gerardoE.pdf'; // Nombre del archivo que se descargará
+                linkDescarga.download = 'gerardoEspinozaR.pdf'; // Nombre del archivo que se descargará
                 
                 // Simular clic para descargar
                 document.body.appendChild(linkDescarga);
