@@ -287,8 +287,9 @@
             <!-- Cargando fecha... -->
         </div>
 
+        <!-- DIV DONDE SE MUESTRA LA FECHA DE VALIDEZ -->
         <div class="valid-text">
-            Válido hasta el <strong>11/12/2027</strong>
+            Válido hasta el <strong id="fecha-validez"><!-- Cargando validez... --></strong>
         </div>
 
         <!-- BOTÓN DE DESCARGA CON JAVASCRIPT -->
@@ -319,17 +320,29 @@
 
     <!-- SCRIPT DE AUTOMATIZACIÓN DE FECHAS (WEB Y PDF) -->
     <script>
-        // 1. OBTENER LA FECHA ACTUAL PARA LA PÁGINA WEB Y EL PDF
+        // 1. OBTENER LA FECHA ACTUAL (EMISIÓN)
         const hoy = new Date();
         const dia = String(hoy.getDate()).padStart(2, '0');
         const mes = String(hoy.getMonth() + 1).padStart(2, '0');
         const anio = hoy.getFullYear();
         const fechaFormateada = `${dia}/${mes}/${anio}`;
         
-        // Mostrar fecha en la web
+        // Mostrar fecha de emisión en la web
         document.getElementById('fecha-emision').innerHTML = `Emitido el ${fechaFormateada}`;
 
-        // 2. FUNCIÓN PARA ESCRIBIR LA FECHA EN EL PDF Y DESCARGARLO
+        // 2. CALCULAR LA FECHA DE VALIDEZ (+90 DÍAS)
+        const fechaValidez = new Date(hoy); // Copiamos la fecha de hoy
+        fechaValidez.setDate(fechaValidez.getDate() + 90); // Le sumamos 90 días
+        
+        const diaVal = String(fechaValidez.getDate()).padStart(2, '0');
+        const mesVal = String(fechaValidez.getMonth() + 1).padStart(2, '0');
+        const anioVal = fechaValidez.getFullYear();
+        const fechaValidezFormateada = `${diaVal}/${mesVal}/${anioVal}`;
+
+        // Mostrar la nueva fecha de validez en la web
+        document.getElementById('fecha-validez').innerText = fechaValidezFormateada;
+
+        // 3. FUNCIÓN PARA ESCRIBIR LA FECHA EN EL PDF Y DESCARGARLO
         async function generarYDescargarPDF() {
             const btn = document.getElementById('btn-descargar');
             btn.innerText = "Generando documento...";
@@ -342,7 +355,7 @@
                 // Cargar el PDF
                 const respuesta = await fetch(urlPDF);
                 if (!respuesta.ok) {
-                    throw new Error("No se pudo encontrar el archivo JuanVizcarra.pdf");
+                    throw new Error("No se pudo encontrar el archivo gerardoEspinozaR.pdf");
                 }
                 const pdfBytesOriginales = await respuesta.arrayBuffer();
                 
